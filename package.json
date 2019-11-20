@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/WilliamsOhworuka/Authentication-Module#readme",
   "devDependencies": {
-    "coveralls": "^3.0.7"
+    "coveralls": "^3.0.7",
+    "eslint": "^6.6.0"
   }
 }
