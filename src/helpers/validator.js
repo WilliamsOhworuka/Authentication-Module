@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 import { check } from 'express-validator';
 import userService from '../services/userService';
 
@@ -17,7 +18,8 @@ const isValidUsername = (field) => check(field)
   .custom((value) => {
     const regex = /^[a-z]*[-]{0,1}[a-z]+$/i;
     return regex.test(value);
-  }).withMessage(`${field} can only contain alphabets and a dash(-)`)
+  }).escape()
+  .withMessage(`${field} can only contain alphabets and a dash(-)`)
   .not()
   .isEmpty()
   .withMessage(`${field} is a required field`);
@@ -35,13 +37,12 @@ const isValidPassword = (field = 'password') => check(field)
 const notDuplicate = (field = 'email') => check(field)
   .trim()
   .normalizeEmail()
-  .custom((value) => {
-    findByEmail(value).then((user) => {
-      if (user) {
-        return Promise.reject(new Error(`${field} already exists`));
-      }
-    });
-  });
+  .custom((value) => findByEmail(value).then((user) => {
+    if (user) {
+      return Promise.reject(`${field} already exists`);
+    }
+  }))
+  .withMessage('Email already exists');
 
 export default {
   notDuplicate,
