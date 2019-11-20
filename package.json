@@ -3,8 +3,26 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "10.15.1",
+    "npm": "6.4.1"
+  },
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build && node ./build/src/app.js",
+    "start-dev": "babel-node ./Backend/src/app.js",
+    "test": " npm run dev-create-table & nyc mocha Backend/test --require @babel/register --exit || true",
+    "lint": "./node_modules/.bin/eslint ./Backend",
+    "build-babel": "npm run clean & babel -d ./build ./Backend -s",
+    "build": "npm run build-babel",
+    "create-table": "node ./build/db/createtables.queries & node ./build/db/seed.queries.js",
+    "drop-table": "node ./build/db/droptables.queries",
+    "dev-create-table": "babel-node ./Backend/db/createtables.queries & babel-node ./Backend/db/seed.queries.js",
+    "dev-drop-table": "babel-node ./Backend/db/droptables.queries",
+    "clean": "rm -rf ./build && mkdir ./build",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -18,10 +36,15 @@
   "homepage": "https://github.com/WilliamsOhworuka/Authentication-Module#readme",
   "devDependencies": {
     "@babel/node": "^7.7.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "coveralls": "^3.0.7",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.2",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^14.1.1"
   },
   "dependencies": {
     "@babel/cli": "^7.7.0",
