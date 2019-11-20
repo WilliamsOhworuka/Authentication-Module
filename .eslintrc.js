@@ -7,6 +7,7 @@ module.exports = {
      "mocha": true
    },
    "rules": {
+     "linebreak-style": ["error", "windows"],
      "one-var": 0,
      "one-var-declaration-per-line": 0,
      "new-cap": 0,
