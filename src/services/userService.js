@@ -22,9 +22,15 @@ const createUser = async (req) => {
   return db.query(text, values);
 };
 
-const getUserRole = async (email) => {
-  const text = 'SELECT roles.name AS role FROM users INNER JOIN roles ON users.role = roles.id WHERE email = $1';
-  const value = [email];
+const createUserRole = async (id) => {
+  const text = 'INSERT INTO userroles(userId) VALUES($1) RETURNING *';
+  const values = [id];
+  return db.query(text, values);
+};
+
+const getUserRole = async (userId) => {
+  const text = 'SELECT roles.name AS role FROM roles INNER JOIN userroles ON userroles.roleid = roles.id WHERE userroles.userid = $1';
+  const value = [userId];
   return db.query(text, value);
 };
 
@@ -41,5 +47,5 @@ const authenticate = (password, user) => {
 };
 
 export default {
-  findByEmail, findById, createUser, updateUser, getUserRole, authenticate
+  findByEmail, findById, createUser, updateUser, getUserRole, authenticate, createUserRole
 };
