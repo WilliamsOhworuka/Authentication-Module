@@ -32,7 +32,7 @@ export default async (info) => {
                 SET verificationToken = $1    
                 WHERE id=$2`;
   const values = [token, id];
-  await updateUser(id, text, values);
+  await updateUser(text, values);
 
   const url = `${process.env.FRONTEND_URL}/confirmation-page?token=${token}`;
   const message = mail(info, url);

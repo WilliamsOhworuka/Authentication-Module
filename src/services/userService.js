@@ -8,7 +8,7 @@ const findByEmail = async (email) => {
   return user;
 };
 
-const updateUser = async (id, text, values) => db.query(text, values);
+const updateUser = async (text, values) => db.query(text, values);
 
 const createUser = async (req) => {
   const hashPassword = bcrypt.hashSync(req.body.password, 8);
@@ -28,6 +28,17 @@ const getUserRole = async (email) => {
   return db.query(text, value);
 };
 
+const checkConfirmation = () => {
+
+};
+
+const findById = async (id) => {
+  const text = 'SELECT * FROM users WHERE id = $1';
+  const value = [id];
+  const { rows: { 0: user } } = await db.query(text, value);
+  return user;
+};
+
 export default {
-  findByEmail, createUser, updateUser, getUserRole
+  findByEmail, findById, createUser, updateUser, getUserRole
 };

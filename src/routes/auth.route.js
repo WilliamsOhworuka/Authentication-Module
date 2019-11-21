@@ -1,11 +1,12 @@
 import express from 'express';
 import Auth from '../controllers/auth.controller';
-import authValidator from '../middlewares/auth.validate';
+import middlewares from '../middlewares';
 
 const router = express.Router();
-const { userValidator: { signupValidator } } = authValidator;
-const { signup } = Auth;
+const { signup, confirmAccount } = Auth;
+const { authValidator: { userValidator: { signupValidator } }, verifyToken } = middlewares;
 
 router.post('/signup', signupValidator, signup);
+router.patch('/confirm/:token', verifyToken, confirmAccount);
 
 export default router;
