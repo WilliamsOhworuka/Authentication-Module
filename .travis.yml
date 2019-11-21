@@ -6,7 +6,7 @@ services:
 cache:
   directories:
     - "node_modules"
-before_install: cd ./Backend
+before_install: cd ./src
 install:
   - npm install
 before_script:
