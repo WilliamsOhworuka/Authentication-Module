@@ -7,6 +7,7 @@ const userText = `create table if not exists users(
     email varchar(50) unique not null,
     password varchar(128) not null,
     confirmed boolean default false,
+    verificationtoken varchar(200),
     role int references roles(id) default 3
 )`;
 
