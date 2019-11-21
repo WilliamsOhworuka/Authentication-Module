@@ -13,7 +13,7 @@
   "scripts": {
     "start": "npm run build && node ./build/app.js",
     "start-dev": "babel-node ./src/app.js",
-    "test": "nyc mocha --require @babel/register tests/*.js --timeout 20000 --exit",
+    "test": "npm run dev-create-table & nyc mocha --require @babel/register tests/*.js --timeout 20000 --exit",
     "lint": "./node_modules/.bin/eslint ./src",
     "build-babel": "npm run clean & babel -d ./build ./src -s",
     "build": "npm run build-babel",
