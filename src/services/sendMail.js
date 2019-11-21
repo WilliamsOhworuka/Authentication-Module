@@ -25,6 +25,11 @@ const mailer = (senderMail, receiverMail, message) => {
   return sendgridMail.send(msg);
 };
 
+/**
+   * Send confirmation email to user
+   * @param {Object} info - user information
+   */
+
 export default async (info) => {
   const { id, email } = info;
   const token = jwt.sign({ id }, process.env.my_secret, { expiresIn: '5h' });

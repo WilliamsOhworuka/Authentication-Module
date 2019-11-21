@@ -4,6 +4,11 @@ import userService from '../services/userService';
 
 const { findByEmail } = userService;
 
+/**
+   * Validate email
+   * @param {String} field - email property from request body
+   */
+
 const isValidEmail = (field = 'email') => check(field)
   .trim()
   .normalizeEmail()
@@ -12,6 +17,11 @@ const isValidEmail = (field = 'email') => check(field)
   .not()
   .isEmpty()
   .withMessage('email is a required field');
+
+/**
+   * Validate user firstname and lastname
+   * @param {String} field - firstname and lastname property from request body
+   */
 
 const isValidUsername = (field) => check(field)
   .trim()
@@ -24,6 +34,10 @@ const isValidUsername = (field) => check(field)
   .isEmpty()
   .withMessage(`${field} is a required field`);
 
+/**
+   * Validate user password
+   * @param {String} field - password property from request body
+   */
 
 const isValidPassword = (field = 'password') => check(field)
   .isLength({ min: 6 })
@@ -34,12 +48,22 @@ const isValidPassword = (field = 'password') => check(field)
   .isAlphanumeric()
   .withMessage(`${field} should contain only numbers and alphabets`);
 
+/**
+   * Validate user Password during signin
+   * @param {String} field -  Password property from request body
+   */
+
 const isValidPasswordSignin = (field = 'password') => check(field)
   .isLength({ min: 6 })
   .withMessage('invalid email or password')
   .not()
   .isEmpty()
   .withMessage(`${field} is a required field`);
+
+/**
+   * Validate email
+   * @param {String} field -  email property from request body
+   */
 
 const notDuplicate = (field = 'email') => check(field)
   .trim()
