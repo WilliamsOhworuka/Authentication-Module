@@ -7,8 +7,7 @@ const userText = `create table if not exists users(
     email varchar(50) unique not null,
     password varchar(128) not null,
     confirmed boolean default false,
-    verificationtoken varchar(200),
-    role int references roles(id) default 3
+    verificationtoken varchar(200)
 )`;
 
 const rolesText = `create table if not exists roles(
@@ -19,10 +18,17 @@ const rolesText = `create table if not exists roles(
     write boolean not null
 )`;
 
+const userrolesText = `create table if not exists userroles(
+  id serial primary key,
+  userid integer references users(id) not null,
+  roleid integer references roles(id) default 3
+)`;
+
 const create = async () => {
   try {
     await database.query(rolesText);
     await database.query(userText);
+    await database.query(userrolesText);
   } catch (err) {
     console.error('creation', err);
   }

@@ -1,6 +1,6 @@
 import database from './index';
 
-const text = 'drop table users,roles';
+const text = 'drop table users,roles,userroles';
 
 const drop = async () => {
   try {

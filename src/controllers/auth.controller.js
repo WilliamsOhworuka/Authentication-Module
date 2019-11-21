@@ -3,14 +3,15 @@ import authHelper from '../helpers/authHelper';
 import sendConfrimationMail from '../services/sendMail';
 
 const {
-  createUser, getUserRole, updateUser, authenticate, findByEmail
+  createUser, getUserRole, updateUser, authenticate, findByEmail, createUserRole
 } = userService;
 const { createToken } = authHelper;
 
 const signup = async (req, res) => {
   try {
     const { rows: { 0: user } } = await createUser(req);
-    const { rows: { 0: { role } } } = await getUserRole(user.email);
+    await createUserRole(user.id);
+    const { rows: { 0: { role } } } = await getUserRole(user.id);
 
     await sendConfrimationMail({ id: user.id, firstname: user.firstname, email: user.email });
     return res.status(201).json({
@@ -65,12 +66,10 @@ const signin = async (req, res) => {
   try {
     const user = await findByEmail(email);
     const valid = authenticate(password, user);
-    // delete user.password;
-    // delete user.verificationtoken;
 
     if (valid && user.confirmed) {
       const token = await createToken(user);
-      const { rows: { 0: { role } } } = await getUserRole(email);
+      const { rows: { 0: { role } } } = await getUserRole(user.id);
       return res.status(200).json({
         token,
         data: {
