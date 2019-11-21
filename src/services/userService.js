@@ -28,10 +28,6 @@ const getUserRole = async (email) => {
   return db.query(text, value);
 };
 
-const checkConfirmation = () => {
-
-};
-
 const findById = async (id) => {
   const text = 'SELECT * FROM users WHERE id = $1';
   const value = [id];
@@ -39,6 +35,11 @@ const findById = async (id) => {
   return user;
 };
 
+const authenticate = (password, user) => {
+  const hashPassword = user ? user.password : null;
+  return !!(!!user && bcrypt.compareSync(password, hashPassword));
+};
+
 export default {
-  findByEmail, findById, createUser, updateUser, getUserRole
+  findByEmail, findById, createUser, updateUser, getUserRole, authenticate
 };

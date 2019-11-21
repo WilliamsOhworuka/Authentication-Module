@@ -34,6 +34,13 @@ const isValidPassword = (field = 'password') => check(field)
   .isAlphanumeric()
   .withMessage(`${field} should contain only numbers and alphabets`);
 
+const isValidPasswordSignin = (field = 'password') => check(field)
+  .isLength({ min: 6 })
+  .withMessage('invalid email or password')
+  .not()
+  .isEmpty()
+  .withMessage(`${field} is a required field`);
+
 const notDuplicate = (field = 'email') => check(field)
   .trim()
   .normalizeEmail()
@@ -48,5 +55,6 @@ export default {
   notDuplicate,
   isValidEmail,
   isValidPassword,
+  isValidPasswordSignin,
   isValidUsername
 };
