@@ -46,7 +46,7 @@ const confirmAccount = async (req, res) => {
 
   const text = `UPDATE users
                 SET confirmed = $1    
-                WHERE id=$2`;
+                WHERE id = $2`;
   const values = [true, id];
 
   try {
@@ -68,7 +68,7 @@ const signin = async (req, res) => {
     const valid = authenticate(password, user);
 
     if (valid && user.confirmed) {
-      const token = await createToken(user);
+      const token = createToken(user);
       const { rows: { 0: { role } } } = await getUserRole(user.id);
       return res.status(200).json({
         token,
@@ -77,8 +77,10 @@ const signin = async (req, res) => {
         },
       });
     }
-    const message = !user.confirmed ? 'please confirm account to signin' : 'invalid email or password';
-    res.status(401).json({
+
+    const message = user && !user.confirmed ? 'please confirm account to signin' : 'invalid email or password';
+
+    return res.status(401).json({
       error: message
     });
   } catch (error) {

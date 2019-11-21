@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import '@babel/polyfill';
 import cors from 'cors';
 import authRoute from './routes/auth.route';
 

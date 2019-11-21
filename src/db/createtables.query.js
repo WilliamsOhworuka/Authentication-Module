@@ -20,8 +20,8 @@ const rolesText = `create table if not exists roles(
 
 const userrolesText = `create table if not exists userroles(
   id serial primary key,
-  userid integer references users(id) not null,
-  roleid integer references roles(id) default 3
+  userid int references users(id) not null,
+  roleid int references roles(id) default 3
 )`;
 
 const create = async () => {
