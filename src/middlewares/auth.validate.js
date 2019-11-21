@@ -3,7 +3,7 @@ import validatorError from './errorHandler';
 
 const {
   notDuplicate, isValidEmail,
-  isValidPassword, isValidUsername
+  isValidPassword, isValidPasswordSignin, isValidUsername
 } = validator;
 
 const userValidator = {
@@ -13,6 +13,11 @@ const userValidator = {
     isValidUsername('lastName'),
     isValidPassword(),
     notDuplicate(),
+    validatorError
+  ],
+  signinValidator: [
+    isValidEmail(),
+    isValidPasswordSignin(),
     validatorError
   ]
 };
